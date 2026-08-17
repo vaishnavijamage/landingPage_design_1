@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Indo Science — Breakthrough Space & STEM Experience</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            glow: '#ff6itb00'
+                        },
+                        cyanGlow: '#06b6d4',
+                        spaceDark: '#030712',
+                        spaceCard: 'rgba(15, 23, 42, 0.65)'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800&display=swap"
+        rel="stylesheet">
+
+    <!-- Animation Libraries (GSAP, ScrollTrigger, Lenis) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #030712;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        /* Ambient Glow & Grid Backdrop */
+        .grid-bg {
+            background-size: 50px 50px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .ambient-radial {
+            background:
+                radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.18), transparent 40%),
+                radial-gradient(circle at 20% 70%, rgba(6, 182, 212, 0.12), transparent 40%),
+                #030712;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-panel-orange {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(15, 23, 42, 0.7) 100%);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.15);
+        }
+
+        /* Text Shimmer Effect */
+        .shimmer-text {
+            background: linear-gradient(90deg, #ffffff 0%, #f97316 50%, #ffffff 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Dynamic Stage CSS */
+        .attention-stage {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* Custom Scroll Bar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 999px;
+        }
+
+        /* Scanline Overlay for Sci-Fi Feel */
+        .scanlines {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+                    rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg,
+                    rgba(255, 0, 0, 0.03),
+                    rgba(0, 255, 0, 0.01),
+                    rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+            z-index: 30;
+            opacity: 0.6;
+        }
+
+        /* Magnetic button pulse */
+        .btn-pulse {
+            box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+            animation: pulse-orange 2s infinite;
+        }
+
+        @keyframes pulse-orange {
+            0% {
+                box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(249, 115, 22, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="ambient-radial grid-bg selection:bg-brand-500 selection:text-white">
+
+    <!-- Background Canvas for Space Dust Particles -->
+    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+    <div class="scanlines"></div>
+
+    <!-- Floating Top Navigation Bar -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 px-4 py-3 flex flex-col items-center gap-3 pointer-events-auto backdrop-blur-md bg-spaceDark/40 border-b border-white/5">
+        <div class="w-full flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center font-black text-spaceDark text-lg shadow-lg shadow-brand-500/30">
+                    🚀
+                </div>
+                <div>
+                    <span class="font-bold tracking-tight text-white text-sm block leading-none">INDO SCIENCE</span>
+                    <span class="text-[9px] font-mono tracking-widest text-brand-400 uppercase">Education Trust</span>
+                </div>
+            </div>
+
+            <!-- Centered Navbar (first row) -->
+            <div class="flex-1 flex items-center justify-center">
+                <!-- Desktop navigation centered -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-white/90">
+                    <a href="#" class="hover:text-brand-400 transition-colors">Home</a>
+                    <a href="#" class="hover:text-brand-400 transition-colors">Team</a>
+                    <a href="#" class="hover:text-brand-400 transition-colors">About Us</a>
+                    <a href="#" class="hover:text-brand-400 transition-colors">Contact Us</a>
+                    <a href="#" class="hover:text-brand-400 transition-colors">Programs</a>
+                </nav>
+
+                <!-- Mobile: centered menu button -->
+                <div class="md:hidden flex justify-center w-full">
+                    <button id="mobileMenuBtn" class="bg-white/5 px-3 py-1.5 rounded-md border border-white/8 text-sm">☰
+                        Menu</button>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Sidebar Scroll Stage Tracker -->
+    <aside class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4 font-mono text-xs">
+        <div id="dot-01" class="stage-dot flex items-center gap-3 text-white/30 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-current transition-all"></span>
+            <span class="dot-label opacity-0 -translate-x-2 transition-all">01 HOOK</span>
+        </div>
+        <div id="dot-02" class="stage-dot flex items-center gap-3 text-white/30 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-current transition-all"></span>
+            <span class="dot-label opacity-0 -translate-x-2 transition-all">02 TRUTH</span>
+        </div>
+        <div id="dot-03" class="stage-dot flex items-center gap-3 text-white/30 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-current transition-all"></span>
+            <span class="dot-label opacity-0 -translate-x-2 transition-all">03 THE EXPERIENCE</span>
+        </div>
+        <div id="dot-04" class="stage-dot flex items-center gap-3 text-white/30 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-current transition-all"></span>
+            <span class="dot-label opacity-0 -translate-x-2 transition-all">04 METRICS & PARTNERS</span>
+        </div>
+        <div id="dot-05" class="stage-dot flex items-center gap-3 text-white/30 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-current transition-all"></span>
+            <span class="dot-label opacity-0 -translate-x-2 transition-all">05 PROGRAMS</span>
+        </div>
+        <div id="dot-06" class="stage-dot flex items-center gap-3 text-white/30 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-current transition-all"></span>
+            <span class="dot-label opacity-0 -translate-x-2 transition-all">06 LAUNCH</span>
+        </div>
+    </aside>
+
+    <main class="relative z-10">
+        <!-- MAIN ATTENTION PINNED SECTION -->
+        <section class="attention-section relative" id="attention">
+            <div class="attention-stage flex items-center justify-center">
+
+
+                <!-- ================= 01: ATTENTION HOOK LAYER ================= -->
+                <div
+                    class="hook-layer absolute inset-0 flex items-center justify-center px-6 z-20 pointer-events-auto pt-20 pb-10">
+                    <div class="max-w-5xl w-full text-center">
+                        <div class="relative">
+                            <img src="DSC_0451.JPG" alt="Students"
+                                class="absolute inset-0 w-full h-full object-cover opacity-40 filter brightness-75 rounded-2xl z-0"
+                                onerror="this.src='https://placehold.co/1600x900/0f172a/f97316?text=Student+Space+Lab'" />
+
+                            <div class="relative z-10">
+                                <div
+                                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel-orange text-brand-400 font-mono text-xs tracking-widest uppercase mb-6 border border-brand-500/30">
+
+                                </div>
+
+                                <h1
+                                    class="hook-title text-4xl sm:text-6xl md:text-8xl font-black tracking-tight uppercase leading-[0.9] text-white">
+                                    WE DON'T TEACH <br />
+                                    <span
+                                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-orange-500 to-amber-300">SCIENCE
+                                        IN CLASS.</span>
+                                </h1>
+
+                                <p
+                                    class="mt-6 text-lg sm:text-2xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
+                                    They told students space was millions of miles away. <br class="hidden sm:block" />
+                                    <strong class="text-white font-semibold">We put real satellite hardware right on
+                                        their
+                                        desks.</strong>
+                                </p>
+
+                                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                                    <div
+                                        class="flex items-center gap-3 text-xs font-mono text-white/50 bg-white/5 px-5 py-3 rounded-full border border-white/10">
+                                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
+                                        SCROLL DOWN TO UNCOVER THE EXPERIMENT
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scroll Down Indicator Pointer -->
+                    <div
+                        class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 font-mono text-[10px] tracking-widest uppercase">
+                        <span>EXPLORE MISSION DATA</span>
+                        <div class="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center p-1">
+                            <div class="w-1.5 h-2 bg-brand-500 rounded-full animate-bounce"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 02: REVEAL / THE SUBVERSION LAYER ================= -->
+                <div
+                    class="reveal-layer absolute inset-0 flex items-center justify-center px-6 z-25 opacity-0 pointer-events-none pt-20 pb-10">
+                    <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+
+                        <!-- Left Copy -->
+                        <div class="reveal-copy md:col-span-5 text-left">
+                            <span class="text-brand-400 font-mono text-xs tracking-widest uppercase block mb-3"></span>
+                            <h2
+                                class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
+                                IT ISN'T A <br />
+                                <span class="shimmer-text">TEXTBOOK.</span>
+                            </h2>
+                            <p class="mt-6 text-base sm:text-lg text-white/70 leading-relaxed font-normal">
+                                Standard education preaches theory. Indo Science equips students to build, launch, test,
+                                and analyze actual aerospace experiments.
+                            </p>
+
+                            <div class="mt-8 space-y-3 font-mono text-xs text-white/80">
+                                <div class="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/10">
+                                    <span class="text-brand-400 font-bold">01</span> Hands-on Satellite Engineering
+                                </div>
+                                <div class="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/10">
+                                    <span class="text-brand-400 font-bold">02</span> Real Telemetry & Data Payload
+                                    Acquisition
+                                </div>
+                                <div class="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/10">
+                                    <span class="text-brand-400 font-bold">03</span> Direct Mentorship from ISRO & Space
+                                    Industry Experts
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Interactive Image Card -->
+                        <div class="md:col-span-7 relative group">
+                            <div
+                                class="relative w-full h-[320px] sm:h-[420px] rounded-3xl overflow-hidden glass-panel border border-brand-500/40 p-2 shadow-2xl transition-transform duration-700 transform group-hover:scale-[1.02]">
+                                <img class="reveal-image w-full h-full object-cover rounded-2xl filter brightness-90 contrast-110"
+                                    src="sattllites.JPG" alt="Students collaborating on space tech"
+                                    onerror="this.src='https://placehold.co/800x600/0f172a/f97316?text=Hands-on+Space+Lab+Experience'" />
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-spaceDark via-transparent to-transparent opacity-80">
+                                </div>
+
+                                <!-- Floating UI Badges -->
+                                <div
+                                    class="absolute top-6 left-6 glass-panel px-4 py-2 rounded-xl text-xs font-mono text-white flex items-center gap-2 border border-white/20">
+                                    <span class="w-2 h-2 rounded-full bg-cyanGlow animate-ping"></span>
+                                    LIVE EXPERIMENTAL SESSION
+                                </div>
+
+                                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                                    <div>
+                                        <div class="text-xs font-mono text-brand-400">MISSION FOCUS</div>
+                                        <div class="text-lg font-bold text-white">CanSat & Payload Assembly</div>
+                                    </div>
+                                    <div class="text-right font-mono text-xs text-white/50">
+                                        VERIFIED IMPACT
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================= 02B: THE VISIT / EXPERIENCE SUBVERSION LAYER ================= -->
+                <div
+                    class="visit-layer absolute inset-0 flex items-center justify-center px-6 z-28 opacity-0 pointer-events-none pt-20 pb-10">
+                    <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+
+                        <!-- Left Image Card -->
+                        <div class="md:col-span-7 relative group order-2 md:order-1">
+                            <div
+                                class="relative w-full h-[280px] sm:h-[380px] rounded-3xl overflow-hidden glass-panel border border-brand-500/40 p-2 shadow-2xl transition-transform duration-700 transform group-hover:scale-[1.02]">
+                                <img class="visit-image w-full h-full object-cover rounded-2xl filter brightness-90 contrast-110"
+                                    src="image1.jpeg" alt="Aerospace Field Experience"
+                                    onerror="this.src='https://placehold.co/800x600/0f172a/f97316?text=Aerospace+Field+Experience'" />
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-spaceDark via-transparent to-transparent opacity-80">
+                                </div>
+
+                                <!-- Floating HUD Badges -->
+                                <div
+                                    class="absolute top-6 left-6 glass-panel px-4 py-2 rounded-xl text-xs font-mono text-white flex items-center gap-2 border border-white/20">
+                                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
+                                    ISRO LAB & PLANETARIUM FIELD EXPEDITION
+                                </div>
+
+                                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                                    <div>
+                                        <div class="text-xs font-mono text-brand-400">INDO SCIENCE TRUST</div>
+                                        <div class="text-lg font-bold text-white">Direct Access to Space Facilities
+                                        </div>
+                                    </div>
+                                    <div class="text-right font-mono text-xs text-white/50">
+                                        LIVE FIELD MISSION
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Copy Content -->
+                        <div class="visit-copy md:col-span-5 text-left order-1 md:order-2">
+                            <span class="text-brand-400 font-mono text-xs tracking-widest uppercase block mb-2">INDO
+                                SCIENCE EDUCATION TRUST / THE EXPERIENCE</span>
+                            <h2
+                                class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
+                                YOU THINK IT'S JUST A <br />
+                                <span class="text-brand-500">SCHOOL VISIT.</span>
+                            </h2>
+
+                            <!-- "IT ISN'T." Callout & Para -->
+                            <div
+                                class="visit-reveal-box mt-5 p-5 glass-panel-orange rounded-2xl border border-brand-500/40 shadow-xl">
+                                <h3
+                                    class="text-2xl sm:text-3xl font-black text-brand-400 uppercase tracking-tight mb-2 flex items-center gap-2">
+                                    <span>💥</span> IT ISN'T.
+                                </h3>
+                                <p class="text-xs sm:text-sm text-white/80 leading-relaxed font-normal">
+                                    A visit becomes a hands-on encounter with space, science,
+                                    engineering and the people building tomorrow.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================= 03: HIGH IMPACT METRICS & PARTNERS LAYER ================= -->
+                <div
+                    class="stats-layer absolute inset-0 flex flex-col justify-center items-center px-6 z-30 opacity-0 pointer-events-none pt-20 pb-8">
+                    <div class="max-w-6xl w-full my-auto">
+                        <div class="text-center mb-4 sm:mb-6">
+                            <span class="text-brand-400 font-mono text-xs tracking-widest uppercase block mb-1">
+                                REAL-TIME IMPACT PROOF</span>
+                            <h2 class="text-2xl sm:text-4xl md:text-5xl font-black uppercase text-white tracking-tight">
+                                NUMBERS THAT BREAK THE TRADITIONAL MOLD
+                            </h2>
+                            <p class="text-white/60 text-xs sm:text-sm max-w-xl mx-auto mt-1">
+                                Quantifiable proof of our nationwide space education revolution.
+                            </p>
+                        </div>
+
+                        <!-- 4 Stat Cards Grid -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+                            <!-- Stat 1: Partner Schools -->
+                            <div
+                                class="stat-card glass-panel-orange p-4 sm:p-5 rounded-2xl border border-brand-500/30 text-center relative overflow-hidden group hover:border-brand-500 transition-all">
+                                <div
+                                    class="absolute -right-6 -top-6 w-20 h-20 bg-brand-500/10 rounded-full filter blur-xl group-hover:bg-brand-500/30 transition-all">
+                                </div>
+                                <div class="font-mono text-[10px] sm:text-xs text-brand-400 mb-1 sm:mb-2">SCHOOL
+                                    ALLIANCE</div>
+                                <div class="stat-number text-3xl sm:text-5xl font-black tracking-tight text-white mb-1">
+                                    <span data-count="1250">0</span><span class="text-brand-500">+</span>
+                                </div>
+                                <div class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Partner
+                                    Schools</div>
+                                <p class="text-[11px] text-white/60 mt-1.5 leading-relaxed hidden sm:block">Thousands of
+                                    top institutions across India equipped with active STEM programs.</p>
+                            </div>
+
+                            <!-- Stat 2: Students Inspired -->
+                            <div
+                                class="stat-card glass-panel-orange p-4 sm:p-5 rounded-2xl border border-brand-500/30 text-center relative overflow-hidden group hover:border-brand-500 transition-all">
+                                <div
+                                    class="absolute -right-6 -top-6 w-20 h-20 bg-cyanGlow/10 rounded-full filter blur-xl group-hover:bg-cyanGlow/30 transition-all">
+                                </div>
+                                <div class="font-mono text-[10px] sm:text-xs text-cyanGlow mb-1 sm:mb-2">MINDS
+                                    HIJACKED</div>
+                                <div class="stat-number text-3xl sm:text-5xl font-black tracking-tight text-white mb-1">
+                                    <span data-count="250000">0</span><span class="text-brand-500">+</span>
+                                </div>
+                                <div class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Students
+                                    Engaged</div>
+                                <p class="text-[11px] text-white/60 mt-1.5 leading-relaxed hidden sm:block">Empowered
+                                    through real satellite kit builds, rocket launches, and telemetry coding.</p>
+                            </div>
+
+                            <!-- Stat 3: Educators Trained -->
+                            <div
+                                class="stat-card glass-panel-orange p-4 sm:p-5 rounded-2xl border border-brand-500/30 text-center relative overflow-hidden group hover:border-brand-500 transition-all">
+                                <div
+                                    class="absolute -right-6 -top-6 w-20 h-20 bg-brand-500/10 rounded-full filter blur-xl group-hover:bg-brand-500/30 transition-all">
+                                </div>
+                                <div class="font-mono text-[10px] sm:text-xs text-brand-400 mb-1 sm:mb-2">EDUCATORS
+                                    TRAINED</div>
+                                <div class="stat-number text-3xl sm:text-5xl font-black tracking-tight text-white mb-1">
+                                    <span data-count="3500">0</span><span class="text-brand-500">+</span>
+                                </div>
+                                <div class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Teachers
+                                    Certified</div>
+                                <p class="text-[11px] text-white/60 mt-1.5 leading-relaxed hidden sm:block">Facilitating
+                                    hands-on space science and practical STEM experiments.</p>
+                            </div>
+
+                            <!-- Stat 4: Payload Launches -->
+                            <div
+                                class="stat-card glass-panel-orange p-4 sm:p-5 rounded-2xl border border-brand-500/30 text-center relative overflow-hidden group hover:border-brand-500 transition-all">
+                                <div
+                                    class="absolute -right-6 -top-6 w-20 h-20 bg-cyanGlow/10 rounded-full filter blur-xl group-hover:bg-cyanGlow/30 transition-all">
+                                </div>
+                                <div class="font-mono text-[10px] sm:text-xs text-cyanGlow mb-1 sm:mb-2">MISSION
+                                    SUCCESS</div>
+                                <div class="stat-number text-3xl sm:text-5xl font-black tracking-tight text-white mb-1">
+                                    <span data-count="180">0</span><span class="text-brand-500">+</span>
+                                </div>
+                                <div class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                                    High-Altitude Launches</div>
+                                <p class="text-[11px] text-white/60 mt-1.5 leading-relaxed hidden sm:block">CanSat &
+                                    atmospheric balloon experiments successfully executed in the field.</p>
+                            </div>
+                        </div>
+
+                        <!-- PARTNER SCHOOLS SHOWCASE GRID & MARQUEE -->
+                        <div class="mt-6 pt-4 border-t border-white/10">
+                            <div class="flex items-center justify-between mb-3">
+                                <div
+                                    class="text-[11px] font-mono text-brand-400 uppercase tracking-widest flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    TRUSTED BY THOUSANDS OF LEADING SCHOOLS ACROSS INDIA
+                                </div>
+                                <span class="text-[10px] font-mono text-white/40 hidden sm:inline">1,000+ ACADEMIC
+                                    INSTITUTIONS</span>
+                            </div>
+
+                            <!-- School Brand Badges Grid -->
+                            <div
+                                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-center font-mono text-[11px]">
+                                <div
+                                    class="glass-panel px-3 py-2 rounded-xl border border-white/10 text-white/80 hover:border-brand-500/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <span>🏫</span> Delhi Public School
+                                </div>
+                                <div
+                                    class="glass-panel px-3 py-2 rounded-xl border border-white/10 text-white/80 hover:border-brand-500/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <span>🏛️</span> Kendriya Vidyalaya
+                                </div>
+                                <div
+                                    class="glass-panel px-3 py-2 rounded-xl border border-white/10 text-white/80 hover:border-brand-500/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <span>🎒</span> Podar International
+                                </div>
+                                <div
+                                    class="glass-panel px-3 py-2 rounded-xl border border-white/10 text-white/80 hover:border-brand-500/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <span>🌟</span> Ryan International
+                                </div>
+                                <div
+                                    class="glass-panel px-3 py-2 rounded-xl border border-white/10 text-white/80 hover:border-brand-500/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <span>🛡️</span> Army Public School
+                                </div>
+                                <div
+                                    class="glass-panel px-3 py-2 rounded-xl border border-white/10 text-white/80 hover:border-brand-500/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <span>🚀</span> Jawahar Navodaya
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================= 04: PROGRAM MATRIX LAYER ================= -->
+                <div
+                    class="program-layer absolute inset-0 flex flex-col justify-center items-center px-6 z-35 opacity-0 pointer-events-none pt-20 pb-8">
+                    <div class="max-w-6xl w-full my-auto">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between mb-5 gap-2">
+                            <div>
+                                <span class="text-brand-400 font-mono text-xs tracking-widest uppercase block mb-1">
+                                    MISSION BLUEPRINT</span>
+                                <h2 class="text-2xl sm:text-4xl font-black uppercase text-white tracking-tight">
+                                    WHAT ACTUALLY <span class="text-brand-500">HAPPENS?</span>
+                                </h2>
+                            </div>
+                            <div class="font-mono text-xs text-white/50">
+                                5 CORE EXPERIENTIAL AEROSPACE MODULES
+                            </div>
+                        </div>
+
+                        <!-- 5 Program Cards with Rich Concrete Details -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3.5">
+                            <!-- Module 1 -->
+                            <div
+                                class="program-card glass-panel p-4 rounded-2xl border border-white/10 hover:border-brand-500/50 transition-all hover:-translate-y-1.5 group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div
+                                            class="text-xl font-black text-brand-500 group-hover:scale-110 transition-transform">
+                                            01</div>
+                                        <span class="text-lg">🔭</span>
+                                    </div>
+                                    <h3 class="text-sm font-bold text-white uppercase leading-snug">Educational Visits
+                                    </h3>
+                                    <p class="text-[11px] text-white/70 mt-2 leading-relaxed">
+                                        Guided trips to ISRO centers, planetariums, and observatories. Students interact
+                                        with senior scientists and witness real space launch infrastructure.
+                                    </p>
+                                </div>
+                                <div
+                                    class="mt-3 pt-2 border-t border-white/10 text-[9px] font-mono text-brand-400 uppercase flex items-center justify-between">
+                                    <span>Field Expeditions</span>
+                                    <span>→</span>
+                                </div>
+                            </div>
+
+                            <!-- Module 2 -->
+                            <div
+                                class="program-card glass-panel p-4 rounded-2xl border border-white/10 hover:border-brand-500/50 transition-all hover:-translate-y-1.5 group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div
+                                            class="text-xl font-black text-brand-500 group-hover:scale-110 transition-transform">
+                                            02</div>
+                                        <span class="text-lg">🛰️</span>
+                                    </div>
+                                    <h3 class="text-sm font-bold text-white uppercase leading-snug">CanSat & Satellite
+                                        Building</h3>
+                                    <p class="text-[11px] text-white/70 mt-2 leading-relaxed">
+                                        Students assemble functional CanSat kits, solder micro-controllers, configure
+                                        environmental sensors, and program live radio telemetry protocols.
+                                    </p>
+                                </div>
+                                <div
+                                    class="mt-3 pt-2 border-t border-white/10 text-[9px] font-mono text-brand-400 uppercase flex items-center justify-between">
+                                    <span>Hardware Engineering</span>
+                                    <span>→</span>
+                                </div>
+                            </div>
+
+                            <!-- Module 3 -->
+                            <div
+                                class="program-card glass-panel p-4 rounded-2xl border border-white/10 hover:border-brand-500/50 transition-all hover:-translate-y-1.5 group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div
+                                            class="text-xl font-black text-brand-500 group-hover:scale-110 transition-transform">
+                                            03</div>
+                                        <span class="text-lg">🔬</span>
+                                    </div>
+                                    <h3 class="text-sm font-bold text-white uppercase leading-snug">Space & STEM Labs
+                                    </h3>
+                                    <p class="text-[11px] text-white/70 mt-2 leading-relaxed">
+                                        Setting up permanent Space & Astronomy labs directly inside schools—complete
+                                        with automated weather stations, radio telescopes, and robotics arenas.
+                                    </p>
+                                </div>
+                                <div
+                                    class="mt-3 pt-2 border-t border-white/10 text-[9px] font-mono text-brand-400 uppercase flex items-center justify-between">
+                                    <span>Campus Infra</span>
+                                    <span>→</span>
+                                </div>
+                            </div>
+
+                            <!-- Module 4 -->
+                            <div
+                                class="program-card glass-panel p-4 rounded-2xl border border-white/10 hover:border-brand-500/50 transition-all hover:-translate-y-1.5 group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div
+                                            class="text-xl font-black text-brand-500 group-hover:scale-110 transition-transform">
+                                            04</div>
+                                        <span class="text-lg">🎈</span>
+                                    </div>
+                                    <h3 class="text-sm font-bold text-white uppercase leading-snug">Atmospheric Launches
+                                    </h3>
+                                    <p class="text-[11px] text-white/70 mt-2 leading-relaxed">
+                                        Launching high-altitude balloon experiments and model rockets. Students measure
+                                        altitude pressure, UV radiation, and analyze sensor graphs live.
+                                    </p>
+                                </div>
+                                <div
+                                    class="mt-3 pt-2 border-t border-white/10 text-[9px] font-mono text-brand-400 uppercase flex items-center justify-between">
+                                    <span>Practical Flight</span>
+                                    <span>→</span>
+                                </div>
+                            </div>
+
+                            <!-- Module 5 -->
+                            <div
+                                class="program-card glass-panel p-4 rounded-2xl border border-white/10 hover:border-brand-500/50 transition-all hover:-translate-y-1.5 group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div
+                                            class="text-xl font-black text-brand-500 group-hover:scale-110 transition-transform">
+                                            05</div>
+                                        <span class="text-lg">🤝</span>
+                                    </div>
+                                    <h3 class="text-sm font-bold text-white uppercase leading-snug">School Partnerships
+                                    </h3>
+                                    <p class="text-[11px] text-white/70 mt-2 leading-relaxed">
+                                        Custom long-term STEM alliances with over 1,000+ schools, providing teacher
+                                        certifications, annual hackathons, and national satellite competitions.
+                                    </p>
+                                </div>
+                                <div
+                                    class="mt-3 pt-2 border-t border-white/10 text-[9px] font-mono text-brand-400 uppercase flex items-center justify-between">
+                                    <span>Institutional Alliance</span>
+                                    <span>→</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 05: FINAL LAUNCH / CTA LAYER ================= -->
+                <div
+                    class="final-layer absolute inset-0 flex items-center justify-center px-6 z-40 opacity-0 pointer-events-none pt-20 pb-10">
+                    <div class="max-w-4xl w-full text-center">
+                        <div
+                            class="inline-block px-4 py-1 rounded-full bg-brand-500/20 text-brand-400 font-mono text-xs uppercase mb-6 border border-brand-500/30">
+                            🚀 MISSION READY
+                        </div>
+
+                        <h2 class="text-4xl sm:text-7xl font-black uppercase text-white tracking-tight leading-[0.95]">
+                            AND THIS IS ONLY THE <br />
+                            <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-orange-500 to-amber-300">BEGINNING.</span>
+                        </h2>
+
+                        <p class="mt-6 text-base sm:text-xl text-white/70 max-w-xl mx-auto font-light">
+                            Bring India's most engaging hands-on space experience to your school. Fuel your students'
+                            curiosity today.
+                        </p>
+
+                        <div
+                            class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 pointer-events-auto">
+                            <a href="#explore-more" onclick="playLaunchSound()"
+                                class="btn-pulse px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-600 text-spaceDark font-black text-sm uppercase tracking-widest transition-all hover:scale-105 shadow-xl shadow-brand-500/30 flex items-center gap-3">
+                                <span>PARTNER WITH US NOW</span>
+                                <span class="text-lg">→</span>
+                            </a>
+                            <a href="#details"
+                                class="px-8 py-4 rounded-full glass-panel hover:bg-white/10 text-white font-bold text-sm uppercase tracking-widest border border-white/20 transition-all">
+                                VIEW DETAILED CURRICULUM
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SUBSEQUENT CONTENT SECTION -->
+        <section class="min-h-screen bg-spaceDark py-24 px-6 border-t border-white/10 relative z-20" id="explore-more">
+            <div class="max-w-6xl mx-auto">
+                <span class="text-brand-400 font-mono text-xs tracking-widest uppercase block mb-3">// NEXT
+                    CHAPTER</span>
+                <h2 class="text-3xl sm:text-6xl font-black text-white uppercase tracking-tight">
+                    READY TO TRANSFORM YOUR SCHOOL'S STEM JOURNEY?
+                </h2>
+                <p class="mt-6 text-lg text-white/60 max-w-2xl leading-relaxed">
+                    Indo Science Education Trust bridges textbook theory with aerospace innovation. Join over 1,000+
+                    partner schools empowering students to build real space tech.
+                </p>
+
+                <!-- Partner Schools Grid Highlight in Lower Section -->
+                <div class="mt-12 glass-panel-orange p-8 rounded-3xl border border-brand-500/30">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div>
+                            <span class="text-brand-400 font-mono text-xs uppercase tracking-widest block mb-1">PROVEN
+                                NATIONWIDE IMPACT</span>
+                            <h3 class="text-2xl font-bold text-white">Join 1,000+ Partner Schools Across India</h3>
+                            <p class="text-sm text-white/70 mt-1">Delhi Public School, Kendriya Vidyalaya, Podar
+                                International, Ryan Group, Army Public Schools & many more.</p>
+                        </div>
+                        <a href="#attention"
+                            class="px-6 py-3 rounded-full bg-brand-500 text-spaceDark font-bold text-xs uppercase tracking-wider hover:bg-brand-400 transition-all whitespace-nowrap">
+                            Request School Demo Kit
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="glass-panel p-8 rounded-3xl border border-white/10">
+                        <div class="text-3xl mb-4">🏫</div>
+                        <h3 class="text-xl font-bold text-white mb-2">For School Principals</h3>
+                        <p class="text-sm text-white/60">Integrate next-gen aerospace labs into your school academic
+                            curriculum.</p>
+                    </div>
+                    <div class="glass-panel p-8 rounded-3xl border border-white/10">
+                        <div class="text-3xl mb-4">👩‍🏫</div>
+                        <h3 class="text-xl font-bold text-white mb-2">For Educators</h3>
+                        <p class="text-sm text-white/60">Access teacher training modules, STEM kits, and experiment
+                            guidebooks.</p>
+                    </div>
+                    <div class="glass-panel p-8 rounded-3xl border border-white/10">
+                        <div class="text-3xl mb-4">🎓</div>
+                        <h3 class="text-xl font-bold text-white mb-2">For Students</h3>
+                        <p class="text-sm text-white/60">Participate in national satellite launch competitions and space
+                            camps.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Web Audio API Sound Engine
+        let audioCtx = null;
+        let sfxEnabled = true;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Global sound effect helper functions
+        function playBeep(freq = 600, type = 'sine', duration = 0.1) {
+            if (!sfxEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {
+                // Ignore audio policy restrictions gracefully
+            }
+        }
+
+        function playLaunchSound() {
+            if (!sfxEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.8);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.8);
+            } catch (e) {
+                // Ignore audio policy restrictions gracefully
+            }
+        }
+
+        // Toggle Sound Effects Button
+        document.addEventListener('DOMContentLoaded', () => {
+            const soundToggle = document.getElementById('soundToggle');
+            if (soundToggle) {
+                soundToggle.addEventListener('click', () => {
+                    sfxEnabled = !sfxEnabled;
+                    const soundIcon = document.getElementById('soundIcon');
+                    const soundText = document.getElementById('soundText');
+                    if (soundIcon) soundIcon.textContent = sfxEnabled ? '🔊' : '🔇';
+                    if (soundText) soundText.textContent = sfxEnabled ? 'SFX: ON' : 'SFX: OFF';
+                    if (sfxEnabled) playBeep(800, 'sine', 0.15);
+                });
+            }
+        });
+
+        // GSAP ScrollTrigger Pinned Timeline Master Sequence
+        gsap.registerPlugin(ScrollTrigger);
+
+        const hookLayer = document.querySelector('.hook-layer');
+        const revealLayer = document.querySelector('.reveal-layer');
+        const visitLayer = document.querySelector('.visit-layer');
+        const statsLayer = document.querySelector('.stats-layer');
+        const programLayer = document.querySelector('.program-layer');
+        const finalLayer = document.querySelector('.final-layer');
+        const statNumbers = document.querySelectorAll('[data-count]');
+
+        // Stage HUD dot highlighter
+        function setStageDot(activeDotId) {
+            document.querySelectorAll('.stage-dot').forEach(dot => {
+                dot.classList.remove('text-brand-400');
+                dot.classList.add('text-white/30');
+                const label = dot.querySelector('.dot-label');
+                if (label) {
+                    label.classList.add('opacity-0', '-translate-x-2');
+                    label.classList.remove('opacity-100', 'translate-x-0');
+                }
+            });
+            const activeDot = document.getElementById(activeDotId);
+            if (activeDot) {
+                activeDot.classList.remove('text-white/30');
+                activeDot.classList.add('text-brand-400');
+                const label = activeDot.querySelector('.dot-label');
+                if (label) {
+                    label.classList.remove('opacity-0', '-translate-x-2');
+                    label.classList.add('opacity-100', 'translate-x-0');
+                }
+            }
+        }
+
+        // Responsive Media Query Timeline
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 768px)", () => {
+            const masterTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#attention",
+                    start: "top top",
+                    end: "+=6500",
+                    scrub: 1.2,
+                    pin: ".attention-stage",
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    onUpdate: (self) => {
+                        const prog = self.progress;
+                        if (prog < 0.15) setStageDot('dot-01');
+                        else if (prog >= 0.15 && prog < 0.33) setStageDot('dot-02');
+                        else if (prog >= 0.33 && prog < 0.52) setStageDot('dot-03');
+                        else if (prog >= 0.52 && prog < 0.70) setStageDot('dot-04');
+                        else if (prog >= 0.70 && prog < 0.88) setStageDot('dot-05');
+                        else setStageDot('dot-06');
+                    }
+                }
+            });
+
+            // 01 -> 02 Exit Hook Layer, Enter Reveal Layer ("IT ISN'T A TEXTBOOK")
+            masterTL.to(hookLayer, {
+                scale: 0.85,
+                opacity: 0,
+                y: -100,
+                filter: "blur(10px)",
+                duration: 1,
+                ease: "power2.inOut"
+            }, 0);
+
+            masterTL.fromTo(revealLayer,
+                { opacity: 0, scale: 1.05, pointerEvents: "none" },
+                { opacity: 1, scale: 1, pointerEvents: "auto", duration: 1.2, ease: "power3.out" },
+                0.8
+            );
+
+            masterTL.fromTo(".reveal-copy",
+                { x: -60, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1 },
+                1.0
+            );
+
+            masterTL.fromTo(".reveal-image",
+                { rotation: 4, scale: 0.95 },
+                { rotation: 0, scale: 1, duration: 1.2 },
+                0.8
+            );
+
+            // 02 -> 03 Exit Reveal Layer, Enter Visit Layer ("YOU THINK IT'S JUST A SCHOOL VISIT... IT ISN'T.")
+            masterTL.to(revealLayer, {
+                opacity: 0,
+                y: -60,
+                scale: 0.95,
+                pointerEvents: "none",
+                duration: 0.9
+            }, 2.0);
+
+            masterTL.to(visitLayer, {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 1.1
+            }, 2.2);
+
+            masterTL.fromTo(".visit-copy",
+                { x: 50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1 },
+                2.3
+            );
+
+            masterTL.fromTo(".visit-image",
+                { scale: 0.9, rotation: -3 },
+                { scale: 1, rotation: 0, duration: 1.2 },
+                2.2
+            );
+
+            masterTL.fromTo(".visit-reveal-box",
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)" },
+                2.5
+            );
+
+            // 03 -> 04 Exit Visit Layer, Enter Stats Layer
+            masterTL.to(visitLayer, {
+                opacity: 0,
+                y: -60,
+                scale: 0.95,
+                pointerEvents: "none",
+                duration: 0.9
+            }, 3.6);
+
+            masterTL.to(statsLayer, {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 1
+            }, 3.8);
+
+            masterTL.fromTo(".stat-card",
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out", onStart: () => playBeep(600, 'sine', 0.1) },
+                3.8
+            );
+
+            // Counter Animations
+            statNumbers.forEach((el, index) => {
+                const target = Number(el.dataset.count);
+                const obj = { val: 0 };
+                masterTL.to(obj, {
+                    val: target,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    onUpdate: () => {
+                        el.textContent = Math.round(obj.val).toLocaleString();
+                    }
+                }, 4.0 + index * 0.15);
+            });
+
+            // 04 -> 05 Exit Stats Layer, Enter Program Matrix
+            masterTL.to(statsLayer, {
+                opacity: 0,
+                scale: 0.95,
+                y: -50,
+                pointerEvents: "none",
+                duration: 0.8
+            }, 5.0);
+
+            masterTL.to(programLayer, {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 0.9
+            }, 5.2);
+
+            masterTL.fromTo(".program-card",
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power2.out" },
+                5.2
+            );
+
+            // 05 -> 06 Exit Program Matrix, Enter Final CTA Layer
+            masterTL.to(programLayer, {
+                opacity: 0,
+                scale: 0.95,
+                pointerEvents: "none",
+                duration: 0.8
+            }, 6.3);
+
+            masterTL.to(finalLayer, {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 1.0
+            }, 6.5);
+
+            masterTL.from(finalLayer.querySelector('.max-w-4xl'), {
+                scale: 0.9,
+                y: 40,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out",
+                onStart: () => playLaunchSound()
+            }, 6.6);
+
+            return () => masterTL.kill();
+        });
+
+        // Mobile Responsive Fallback Timeline
+        mm.add("(max-width: 767px)", () => {
+            const mobileTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#attention",
+                    start: "top top",
+                    end: "+=4800",
+                    scrub: 1.0,
+                    pin: ".attention-stage",
+                    anticipatePin: 1
+                }
+            });
+
+            mobileTL.to(hookLayer, { opacity: 0, y: -40, duration: 1 }, 0);
+            mobileTL.to(revealLayer, { opacity: 1, duration: 1 }, 0.8);
+            mobileTL.to(revealLayer, { opacity: 0, y: -40, duration: 1 }, 2.0);
+
+            mobileTL.to(visitLayer, { opacity: 1, duration: 1 }, 2.2);
+            mobileTL.to(visitLayer, { opacity: 0, y: -40, duration: 1 }, 3.4);
+
+            mobileTL.to(statsLayer, { opacity: 1, duration: 1 }, 3.6);
+
+            statNumbers.forEach((el, index) => {
+                const target = Number(el.dataset.count);
+                const obj = { val: 0 };
+                mobileTL.to(obj, {
+                    val: target,
+                    duration: 1,
+                    onUpdate: () => { el.textContent = Math.round(obj.val).toLocaleString(); }
+                }, 3.7 + index * 0.2);
+            });
+
+            mobileTL.to(statsLayer, { opacity: 0, duration: 1 }, 4.8);
+            mobileTL.to(programLayer, { opacity: 1, duration: 1 }, 5.0);
+            mobileTL.to(programLayer, { opacity: 0, duration: 1 }, 6.2);
+            mobileTL.to(finalLayer, { opacity: 1, duration: 1 }, 6.4);
+
+            return () => mobileTL.kill();
+        });
+
+        // Lenis Smooth Scroll Setup
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        // Canvas Particle Dust Animation
+        const canvas = document.getElementById('particleCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.speedY = (Math.random() - 0.5) * 0.3;
+                    this.alpha = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.fillStyle = `rgba(249, 115, 22, ${this.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 75; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
+    </script>
+</body>
+
+</html>
